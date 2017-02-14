@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  This file is part of IIIF Manifest Creator.
  *
@@ -19,7 +20,8 @@
  *  @package  Links
  *  @author   Harry Shyket <harry.shyket@yale.edu>
  *  @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*/
+ */
+
 namespace IIIF\PresentationAPI\Links;
 
 /**
@@ -29,20 +31,21 @@ namespace IIIF\PresentationAPI\Links;
  */
 use IIIF\PresentationAPI\Parameters\Identifier;
 use IIIF\Utils\ArrayCreator;
+use IIIF\PresentationAPI\Links\Service;
 
 class Service extends LinkAbstract {
 
     private $context = "http://iiif.io/api/image/2/context.json";
     private $profile;
     private $label;
+    protected $services = array();
 
     /**
      * Set the context.
      *
      * @param string $context
      */
-    public function setContext($context)
-    {
+    public function setContext($context) {
         $this->context = $context;
     }
 
@@ -51,24 +54,44 @@ class Service extends LinkAbstract {
      *
      * @return string
      */
-    public function getContext()
-    {
+    public function getContext() {
         return $this->context;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \IIIF\PresentationAPI\Resources\ResourceInterface::addService()
+     * @param \IIIF\PresentationAPI\Links\Service
+     */
+    public function addService(Service $service)
+    {
+        array_push($this->services, $service);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \IIIF\PresentationAPI\Resources\ResourceInterface::getAttributions()
+     * @return array
+     */
+    public function getServices()
+    {
+        return $this->services;
     }
 
     /**
      * {@inheritDoc}
      * @see \IIIF\PresentationAPI\Links\LinkAbstract::toArray()
      */
-    public function toArray()
-    {
+    public function toArray() {
         $item = array();
 
         ArrayCreator::addRequired($item, Identifier::CONTEXT, $this->getContext(), "The context must be present in a service");
         ArrayCreator::addRequired($item, Identifier::ID, $this->getID(), "The id must be present in a service");
         ArrayCreator::addRequired($item, Identifier::PROFILE, $this->getProfile(), "The profile must be present in a service");
-        ArrayCreator::addIfExists($item, Identifier::LABEL, $this->getLabel());
+        ArrayCreator::addIfExists($item, Identifier::LABEL, $this->getLabel());        
+        ArrayCreator::addIfExists($item, Identifier::SERVICE, $this->getServices());
 
         return $item;
     }
+
 }

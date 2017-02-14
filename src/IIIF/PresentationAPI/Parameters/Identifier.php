@@ -31,10 +31,12 @@ class Identifier {
     const ATTRIBUTION       = "attribution";
     const ATVALUE           = "@value";
     const CANVASES          = "canvases";
+    const CHARS          = "chars";
     const COLLECTIONS       = "collections";
     const CONTENTLAYER      = "contentLayer";
     const CONTEXT		        = "@context";
     const DESCRIPTION       = "description";
+    const ELEMENTS       = "elements";
     const FORMAT            = "format";
     const FORMATS           = "formats";
     const HEIGHT            = "height";
@@ -66,6 +68,7 @@ class Identifier {
     const SCALEFACTORS      = "scaleFactors";
     const SEEALSO           = "seeAlso";
     const SEQUENCES         = "sequences";
+    const MEDIASEQUENCES         = "mediaSequences";
     const SERVICE           = "service";
     const SIZES             = "sizes";
     const STARTCANVAS       = "startCanvas";

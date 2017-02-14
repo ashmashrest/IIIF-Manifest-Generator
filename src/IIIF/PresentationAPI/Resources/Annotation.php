@@ -80,6 +80,26 @@ class Annotation extends ResourceAbstract {
     {
         return $this->content;
     }
+    
+    /**
+     * Set the content resource.
+     *
+     * @param \IIIF\PresentationAPI\Resources\ContentAsText $content
+     */
+    public function setContentAsText(ContentAsText $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get the content resource.
+     *
+     * @return \IIIF\PresentationAPI\Resources\ContentAsText
+     */
+    public function getContentAsText()
+    {
+        return $this->content;
+    }
 
     /**
      * Set the on value.
@@ -140,6 +160,7 @@ class Annotation extends ResourceAbstract {
 
       /** Resource Types **/
       ArrayCreator::addIfExists($item, Identifier::RESOURCE, $this->getContent());
+        ArrayCreator::addIfExists($item, Identifier::RESOURCE, $this->getContentAsText());
 
       return $item;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  This file is part of IIIF Manifest Creator.
  *
@@ -19,7 +20,7 @@
  *  @package  Resources
  *  @author   Harry Shyket <harry.shyket@yale.edu>
  *  @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*/
+ */
 
 namespace IIIF\PresentationAPI\Resources;
 
@@ -39,8 +40,8 @@ class Manifest extends ResourceAbstract {
 
     private $onlymemberdata = false;
     private $sequences = array();
+    private $mediasequences = array();
     private $structures = array();
-
     public $type = "sc:Manifest";
 
     /**
@@ -48,8 +49,7 @@ class Manifest extends ResourceAbstract {
      *
      * @param \IIIF\PresentationAPI\Resources\Sequence $sequence
      */
-    public function addSequence(Sequence $sequence)
-    {
+    public function addSequence(Sequence $sequence) {
         array_push($this->sequences, $sequence);
     }
 
@@ -58,9 +58,26 @@ class Manifest extends ResourceAbstract {
      *
      * @return array
      */
-    public function getSequences()
-    {
+    public function getSequences() {
         return $this->sequences;
+    }
+
+    /**
+     * Add a sequence to the manifest.
+     *
+     * @param \IIIF\PresentationAPI\Resources\MediaSequence $mediasequence
+     */
+    public function addMediaSequence(MediaSequence $mediasequence) {
+        array_push($this->mediasequences, $mediasequence);
+    }
+
+    /**
+     * Get all of the  media sequences.
+     *
+     * @return array
+     */
+    public function getMediaSequences() {
+        return $this->mediasequences;
     }
 
     /**
@@ -68,8 +85,7 @@ class Manifest extends ResourceAbstract {
      *
      * @param \IIIF\PresentationAPI\Resources\Range $range
      */
-    public function addStructure(Range $range)
-    {
+    public function addStructure(Range $range) {
         array_push($this->structures, $range);
     }
 
@@ -78,8 +94,7 @@ class Manifest extends ResourceAbstract {
      *
      * @return array
      */
-    public function getStructures()
-    {
+    public function getStructures() {
         return $this->structures;
     }
 
@@ -88,8 +103,7 @@ class Manifest extends ResourceAbstract {
      *
      * @param \IIIF\PresentationAPI\Resources\Sequence $sequence
      */
-    public function validateSequence(Sequence $sequence)
-    {
+    public function validateSequence(Sequence $sequence) {
         $classname = '\IIIF\PresentationAPI\Resources\Sequence';
         $exclusions = array(
             'getID',
@@ -107,8 +121,7 @@ class Manifest extends ResourceAbstract {
      *
      * @param AnnotationList $annotationlist
      */
-    public function validateAnnotationList(AnnotationList $annotationlist)
-    {
+    public function validateAnnotationList(AnnotationList $annotationlist) {
         $classname = '\IIIF\PresentationAPI\Resources\AnnotationList';
         $exclusions = array(
             'getID',
@@ -126,11 +139,10 @@ class Manifest extends ResourceAbstract {
      *
      * @see \IIIF\PresentationAPI\Resources\ResourceAbstract::toArray()
      */
-    public function toArray()
-    {
+    public function toArray() {
         $item = array();
 
-         if ($this->getOnlyMemberData()) {
+        if ($this->getOnlyMemberData()) {
             ArrayCreator::addRequired($item, Identifier::ID, $this->getID(), "The id must be present in a Manifest");
             ArrayCreator::addRequired($item, Identifier::TYPE, $this->getType(), "The type must be present in a Manifest");
             ArrayCreator::addRequired($item, Identifier::LABEL, $this->getLabels(), "The label must be present in a Manifest");
@@ -138,7 +150,7 @@ class Manifest extends ResourceAbstract {
             return $item;
         }
 
-        /** Technical Properties **/
+        /** Technical Properties * */
         if ($this->isTopLevel()) {
             ArrayCreator::addRequired($item, Identifier::CONTEXT, $this->getContexts(), "The context must be present in the Manifest");
         }
@@ -148,44 +160,45 @@ class Manifest extends ResourceAbstract {
         ArrayCreator::addIfExists($item, Identifier::VIEWINGDIRECTION, $this->getViewingDirection());
         ArrayCreator::addIfExists($item, Identifier::NAVDATE, $this->getNavDate());
 
-        /** Descriptive Properties **/
+        /** Descriptive Properties * */
         ArrayCreator::addRequired($item, Identifier::LABEL, $this->getLabels(), "The label must be present in the Manifest");
         ArrayCreator::addIfExists($item, Identifier::METADATA, $this->getMetadata());
         ArrayCreator::addIfExists($item, Identifier::DESCRIPTION, $this->getDescriptions());
         ArrayCreator::addIfExists($item, Identifier::THUMBNAIL, $this->getThumbnails());
 
-        /** Rights and Licensing Properties **/
+        /** Rights and Licensing Properties * */
         ArrayCreator::addIfExists($item, Identifier::LICENSE, $this->getLicenses());
         ArrayCreator::addIfExists($item, Identifier::ATTRIBUTION, $this->getAttributions());
         ArrayCreator::addIfExists($item, Identifier::LOGO, $this->getLogos());
 
-        /**  Linking Properties **/
+        /**  Linking Properties * */
         ArrayCreator::addIfExists($item, Identifier::RELATED, $this->getRelated());
         ArrayCreator::addIfExists($item, Identifier::RENDERING, $this->getRendering());
         ArrayCreator::addIfExists($item, Identifier::SERVICE, $this->getServices());
         ArrayCreator::addIfExists($item, Identifier::SEEALSO, $this->getSeeAlso());
         ArrayCreator::addIfExists($item, Identifier::WITHIN, $this->getWithin());
 
-        /** Resource Types **/
+        /** Resource Types * */
         if ($this->isTopLevel()) {
             $x = 1;
-            foreach($this->sequences as $sequence) {
+            foreach ($this->sequences as $sequence) {
 
                 // Skip first sequence
                 if ($x > 1) {
-                  $this->validateSequence($sequence);
+                    $this->validateSequence($sequence);
                 }
                 $x++;
                 foreach ($sequence->getCanvases() as $canvases) {
-                    foreach($canvases->getOtherContents() as $annotationlist)
+                    foreach ($canvases->getOtherContents() as $annotationlist)
                         $this->validateAnnotationList($annotationlist);
                 }
             }
             ArrayCreator::addRequired($item, Identifier::SEQUENCES, $this->getSequences(), "The first Sequence must be embedded within a Manifest", false);
+            ArrayCreator::addIfExists($item, Identifier::MEDIASEQUENCES, $this->getMediaSequences(), false);
             ArrayCreator::addIfExists($item, Identifier::STRUCTURES, $this->getStructures(), false);
-        }
-        else {
+        } else {
             ArrayCreator::addIfExists($item, Identifier::SEQUENCES, $this->getSequences(), false);
+            ArrayCreator::addIfExists($item, Identifier::MEDIASEQUENCES, $this->getMediaSequences(),false);
             ArrayCreator::addIfExists($item, Identifier::STRUCTURES, $this->getStructures(), false);
         }
 
