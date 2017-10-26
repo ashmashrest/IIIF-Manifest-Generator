@@ -99,9 +99,8 @@ class Range extends ResourceAbstract {
     /**
      * Add a canvas.
      *
-     * @param \IIIF\PresentationAPI\Resources\Canvas $canvas
      */
-    public function addCanvas(Canvas $canvas)
+    public function addCanvas($canvas)
     {
         array_push($this->canvases, $canvas);
     }
