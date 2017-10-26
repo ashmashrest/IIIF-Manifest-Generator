@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  This file is part of IIIF Manifest Creator.
  *
@@ -19,7 +20,8 @@
  *  @package  Parameters
  *  @author   Harry Shyket <harry.shyket@yale.edu>
  *  @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*/
+ */
+
 namespace IIIF\PresentationAPI\Parameters;
 
 /**
@@ -28,60 +30,66 @@ namespace IIIF\PresentationAPI\Parameters;
  */
 class Identifier {
 
-    const ATTRIBUTION       = "attribution";
-    const ATVALUE           = "@value";
-    const CANVASES          = "canvases";
-    const CHARS          = "chars";
-    const COLLECTIONS       = "collections";
-    const CONTENTLAYER      = "contentLayer";
-    const CONTEXT		        = "@context";
-    const DESCRIPTION       = "description";
-    const ELEMENTS       = "elements";
-    const FORMAT            = "format";
-    const FORMATS           = "formats";
-    const HEIGHT            = "height";
-    const ID				        = "@id";
-    const IMAGES            = "images";
-  	const LABEL			        = "label";
-  	const LANG              = "@lang";
-  	const LANGUAGE          = "@language";
-  	const LICENSE           = "license";
-  	const LOGO              = "logo";
-    const MANIFESTS         = "manifests";
-    const MAXAREA           = "maxArea";
-    const MAXHEIGHT         = "maxHeight";
-    const MAXWIDTH          = "maxWidth";
-    const MEMBERS           = "members";
-  	const METADATA          = "metadata";
-  	const MOTIVATION        = "motivation";
-  	const NAVDATE           = "navDate";
-  	const ON                = "on";
-  	const OTHERCONTENT      = "otherContent";
-    const PROFILE           = "profile";
-    const PROTOCOL          = "protocol";
-    const QUALITIES         = "qualities";
-    const RANGES            = "ranges";
-    const RELATED           = "related";
-    const RENDERING         = "rendering";
-    const RESOURCE          = "resource";
-    const RESOURCES         = "resources";
-    const SCALEFACTORS      = "scaleFactors";
-    const SEEALSO           = "seeAlso";
-    const SEQUENCES         = "sequences";
-    const MEDIASEQUENCES         = "mediaSequences";
-    const SERVICE           = "service";
-    const SIZES             = "sizes";
-    const STARTCANVAS       = "startCanvas";
-    const STRUCTURES        = "structures";
-    const SUPPORTS          = "supports";
-  	const THUMBNAIL         = "thumbnail";
-  	const TILES             = "tiles";
-  	const TOTAL             = "total";
-  	const TYPE              = "@type";
-  	const VALUE             = "value";
-  	const VIEWINGDIRECTION  = "viewingDirection";
-  	const VIEWINGHINT       = "viewingHint";
-  	const WIDTH             = "width";
-  	const WITHIN            = "within";
+    const ACCESSHINT = "accessHint";
+    const ATTRIBUTION = "attribution";
+    const ATVALUE = "@value";
+    const AUTHSERVICE = "authService";
+    const CANVASES = "canvases";
+    const CHARS = "chars";
+    const COLLECTIONS = "collections";    
+    const CONFIRMLABEL = "confirmLabel";
+    const CONTENTLAYER = "contentLayer";
+    const CONTEXT = "@context";
+    const DESCRIPTION = "description";
+    const ELEMENTS = "elements";        
+    const FAILUREDESCRIPTION = "failureDescription";
+    const FAILUREHEADER = "failureHeader";
+    const FORMAT = "format";
+    const FORMATS = "formats";
+    const HEADER = "header";
+    const HEIGHT = "height";
+    const ID = "@id";
+    const IMAGES = "images";
+    const LABEL = "label";
+    const LANG = "@lang";
+    const LANGUAGE = "@language";
+    const LICENSE = "license";
+    const LOGO = "logo";
+    const MANIFESTS = "manifests";
+    const MAXAREA = "maxArea";
+    const MAXHEIGHT = "maxHeight";
+    const MAXWIDTH = "maxWidth";
+    const MEMBERS = "members";
+    const METADATA = "metadata";
+    const MOTIVATION = "motivation";
+    const NAVDATE = "navDate";
+    const ON = "on";
+    const OTHERCONTENT = "otherContent";
+    const PROFILE = "profile";
+    const PROTOCOL = "protocol";
+    const QUALITIES = "qualities";
+    const RANGES = "ranges";
+    const RELATED = "related";
+    const RENDERING = "rendering";
+    const RESOURCE = "resource";
+    const RESOURCES = "resources";
+    const SCALEFACTORS = "scaleFactors";
+    const SEEALSO = "seeAlso";
+    const SEQUENCES = "sequences";
+    const MEDIASEQUENCES = "mediaSequences";
+    const SERVICE = "service";
+    const SIZES = "sizes";
+    const STARTCANVAS = "startCanvas";
+    const STRUCTURES = "structures";
+    const SUPPORTS = "supports";
+    const THUMBNAIL = "thumbnail";
+    const TILES = "tiles";
+    const TOTAL = "total";
+    const TYPE = "@type";
+    const VALUE = "value";
+    const VIEWINGDIRECTION = "viewingDirection";
+    const VIEWINGHINT = "viewingHint";
+    const WIDTH = "width";
+    const WITHIN = "within";
 
 }

@@ -32,11 +32,10 @@ namespace IIIF\PresentationAPI\Links;
 use IIIF\PresentationAPI\Parameters\Identifier;
 use IIIF\Utils\ArrayCreator;
 use IIIF\PresentationAPI\Links\Service;
-use IIIF\PresentationAPI\Links\AuthService;
 
-class Service extends LinkAbstract {
+class AuthService extends Service {
 
-    private $context = "http://iiif.io/api/image/2/context.json";
+    private $context = "http://iiif.io/api/auth/1/context.json";
     private $profile;
     private $label;
     private $header;
@@ -44,28 +43,7 @@ class Service extends LinkAbstract {
     private $confirmLabel;
     private $failureHeader;
     private $failureDescription;
-    private $accessHint;
     protected $services = array();
-    protected $authservices = array();
-
-    /**
-     * Set the context.
-     *
-     * @param string $context
-     */
-    public function setContext($context) {
-        $this->context = $context;
-    }
-
-    /**
-     * Get the context.
-     *
-     * @return string
-     */
-    public function getContext() {
-        return $this->context;
-    }
-
     /*
      * Set the header
      * 
@@ -105,7 +83,6 @@ class Service extends LinkAbstract {
     public function getDescription() {
         return $this->description;
     }
-
     /*
      * Set the confirmLabel
      * 
@@ -145,7 +122,7 @@ class Service extends LinkAbstract {
     public function getFailureHeader() {
         return $this->failureHeader;
     }
-
+    
     /*
      * Set the failureDescription
      * 
@@ -165,25 +142,6 @@ class Service extends LinkAbstract {
     public function getFailureDescription() {
         return $this->failureDescription;
     }
-    /*
-     * Set the accessHint
-     * 
-     * @param string $accessHint
-     */
-
-    public function setAccessHint($accessHint) {
-        $this->accessHint = $accessHint;
-    }
-
-    /*
-     * Get the accessHint
-     * 
-     * @return string
-     */
-
-    public function getAccessHint() {
-        return $this->accessHint;
-    }
 
     /**
      * {@inheritDoc}
@@ -202,24 +160,6 @@ class Service extends LinkAbstract {
     public function getServices() {
         return $this->services;
     }
-    
-    /**
-     * {@inheritDoc}
-     * @see \IIIF\PresentationAPI\Resources\ResourceInterface::addService()
-     * @param \IIIF\PresentationAPI\Links\AuthService
-     */
-    public function addAuthService(AuthService $service) {
-        array_push($this->authservices, $service);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \IIIF\PresentationAPI\Resources\ResourceInterface::getAttributions()
-     * @return array
-     */
-    public function getAuthServices() {
-        return $this->authservices;
-    }
 
     /**
      * {@inheritDoc}
@@ -237,9 +177,7 @@ class Service extends LinkAbstract {
         ArrayCreator::addIfExists($item, Identifier::CONFIRMLABEL, $this->getConfirmLabel());
         ArrayCreator::addIfExists($item, Identifier::FAILUREHEADER, $this->getFailureHeader());
         ArrayCreator::addIfExists($item, Identifier::FAILUREDESCRIPTION, $this->getFailureDescription());
-        ArrayCreator::addIfExists($item, Identifier::ACCESSHINT, $this->getAccessHint());
         ArrayCreator::addIfExists($item, Identifier::SERVICE, $this->getServices());
-        ArrayCreator::addIfExists($item, Identifier::AUTHSERVICE, $this->getAuthServices());
 
         return $item;
     }
