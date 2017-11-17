@@ -55,9 +55,9 @@ class AnnotationList extends ResourceAbstract {
      * @param \IIIF\PresentationAPI\Resources\Annotation $annotation
      */
     public function addAnnotation(Annotation $annotation) {
-       /* if(empty($this->annotations))*/
-            $this->annotations[] = $annotation;
-        //array_push($this->annotations, $annotation);
+        if(empty($this->annotations))
+            $this->annotations[0] = $annotation;
+        array_push($this->annotations, $annotation);
     }
 
     /**
@@ -173,7 +173,10 @@ class AnnotationList extends ResourceAbstract {
         ArrayCreator::addIfExists($item, Paging::STARTINDEX, $this->getStartIndex());
 
         /** Resource Types * */
-        ArrayCreator::addIfExists($item, Identifier::RESOURCES, $this->getAnnotations(), FALSE);
+        ArrayCreator::addIfExists($item, Identifier::RESOURCES, $this->getAnnotations());
+       /* echo "<pre>";
+        var_dump($item);
+        echo "</pre>";die();*/
         return $item;
     }
 
